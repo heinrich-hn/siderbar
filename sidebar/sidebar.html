@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tooltip Translator</title>
+    <link rel="stylesheet" href="sidebar.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tooltip Translator</h1>
+        <div class="input-section">
+            <label for="afrikaansInput">Enter Afrikaans text:</label>
+            <textarea id="afrikaansInput" rows="4" placeholder="Type or paste Afrikaans text here..."></textarea>
+            <button id="translateBtn">Translate to English</button>
+        </div>
+        <div class="output-section">
+            <label for="englishOutput">English Translation:</label>
+            <textarea id="englishOutput" rows="4" readonly></textarea>
+        </div>
+        <div class="status" id="status"></div>
+    </div>
+    <script src="sidebar.js"></script>
+</body>
+</html>

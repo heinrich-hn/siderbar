@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "Tooltip Translator",
+  "version": "1.0",
+  "description": "Translate Afrikaans to English using LLMs in a sidebar with tooltip functionality",
+  "action": {
+    "default_title": "Tooltip Translator"
+  },
+  "side_panel": {
+    "default_path": "sidebar/sidebar.html"
+  },
+  "permissions": [
+    "storage",
+    "scripting",
+    "tabs",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": false
+  },
+  "background": {
+    "service_worker": "worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "contentScript.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

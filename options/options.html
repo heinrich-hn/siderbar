@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tooltip Translator Options</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Tooltip Translator Settings</h1>
+    <div class="section">
+      <h2>API Keys</h2>
+      <div class="field">
+        <label for="openaiKey">OpenAI API Key:</label>
+        <input type="password" id="openaiKey" placeholder="sk-...">
+      </div>
+      <div class="field">
+        <label for="openrouterKey">OpenRouter API Key:</label>
+        <input type="password" id="openrouterKey" placeholder="sk-or-...">
+      </div>
+      <div class="field">
+        <label for="groqKey">Groq API Key:</label>
+        <input type="password" id="groqKey" placeholder="gsk_...">
+      </div>
+    </div>
+    <div class="section">
+      <h2>Model Selection</h2>
+      <div class="field">
+        <label for="modelSelect">Select Model Provider:</label>
+        <select id="modelSelect">
+          <option value="openai">OpenAI (gpt-3.5-turbo)</option>
+          <option value="openrouter">OpenRouter (multiple models)</option>
+          <option value="groq">Groq (fast inference)</option>
+        </select>
+      </div>
+      <div class="field" id="openrouterModelField" style="display: none;">
+        <label for="openrouterModelSelect">OpenRouter Model:</label>
+        <select id="openrouterModelSelect">
+          <option value="openai/gpt-3.5-turbo">GPT-3.5 Turbo</option>
+          <option value="openai/gpt-4">GPT-4</option>
+          <option value="anthropic/claude-2">Claude 2</option>
+          <option value="google/palm-2-chat-bison">PaLM 2</option>
+        </select>
+      </div>
+    </div>
+    <button id="saveBtn">Save Settings</button>
+    <div id="status"></div>
+  </div>
+  <script src="options.js"></script>
+</body>
+
+</html>
