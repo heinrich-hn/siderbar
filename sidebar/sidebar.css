@@ -13,10 +13,29 @@ body {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
 h1 {
   font-size: 20px;
-  margin: 0 0 20px 0;
+  margin: 0;
   color: #333;
+}
+
+.header a {
+  font-size: 20px;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.header a:hover {
+  opacity: 1;
 }
 
 .input-section,
@@ -51,6 +70,23 @@ textarea:focus {
 textarea[readonly] {
   background-color: #f8f9fa;
   cursor: default;
+}
+
+.char-count {
+  font-size: 12px;
+  color: #999;
+  text-align: right;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+.char-count.near-limit {
+  color: #f57c00;
+}
+
+.char-count.at-limit {
+  color: #d32f2f;
+  font-weight: 600;
 }
 
 button {

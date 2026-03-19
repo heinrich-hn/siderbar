@@ -8,15 +8,19 @@
 </head>
 <body>
     <div class="container">
-        <h1>Tooltip Translator</h1>
+        <div class="header">
+            <h1>Tooltip Translator</h1>
+            <a href="#" id="optionsLink" title="Open Settings">⚙️</a>
+        </div>
         <div class="input-section">
-            <label for="afrikaansInput">Enter Afrikaans text:</label>
-            <textarea id="afrikaansInput" rows="4" placeholder="Type or paste Afrikaans text here..."></textarea>
+            <label for="afrikaansInput">Afrikaans text:</label>
+            <textarea id="afrikaansInput" rows="5" placeholder="Type or paste Afrikaans text here..." maxlength="2000"></textarea>
+            <div class="char-count"><span id="charCount">0</span> / 2000</div>
             <button id="translateBtn">Translate to English</button>
         </div>
         <div class="output-section">
             <label for="englishOutput">English Translation:</label>
-            <textarea id="englishOutput" rows="4" readonly></textarea>
+            <textarea id="englishOutput" rows="5" readonly placeholder="Translation will appear here..."></textarea>
         </div>
         <div class="status" id="status"></div>
     </div>

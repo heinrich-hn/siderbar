@@ -160,9 +160,19 @@ if (!chrome.runtime) {
 } else {
   console.log('chrome.runtime is available, setting up listeners...');
 
+  // Open the side panel when the extension action icon is clicked
+  chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(console.error);
+
+  chrome.action.onClicked.addListener((tab) => {
+    chrome.sidePanel.open({ tabId: tab.id }).catch(console.error);
+  });
+
   // Handle extension installed or updated
   chrome.runtime.onInstalled.addListener((details) => {
     console.log('Extension installed/updated:', details.reason);
+
+    // Always ensure panel opens on action click
+    chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(console.error);
 
     if (details.reason === 'install') {
       console.log('Setting default values');
@@ -178,11 +188,6 @@ if (!chrome.runtime) {
         console.log('Default settings saved');
       });
     }
-  });
-
-  // Handle extension uninstall
-  chrome.runtime.onUninstall.addListener((reason) => {
-    console.log('Extension uninstalled:', reason);
   });
 
   // Handle messages from content script or sidebar

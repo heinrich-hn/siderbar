@@ -49,6 +49,9 @@ class OptionsManager {
       if (result.openrouterModel) {
         this.elements.openrouterModelSelect.value = result.openrouterModel;
       }
+
+      // Update field visibility after settings are loaded
+      this.toggleOpenRouterField();
     } catch (error) {
       console.log('Could not load settings:', error);
     }

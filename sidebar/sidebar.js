@@ -7,11 +7,33 @@ class SidebarTranslator {
     this.englishOutput = document.getElementById('englishOutput');
     this.translateBtn = document.getElementById('translateBtn');
     this.statusElement = document.getElementById('status');
+    this.charCountEl = document.getElementById('charCount');
+    this.optionsLink = document.getElementById('optionsLink');
+    this.hasKeys = null;
 
     this.init();
   }
 
   async init() {
+    if (this.optionsLink) {
+      this.optionsLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        chrome.runtime.openOptionsPage();
+      });
+    }
+
+    if (this.afrikaansInput && this.charCountEl) {
+      this.afrikaansInput.addEventListener('input', () => {
+        const len = this.afrikaansInput.value.length;
+        this.charCountEl.textContent = len;
+        const counter = this.charCountEl.closest('.char-count');
+        if (counter) {
+          counter.className = 'char-count' +
+            (len >= 2000 ? ' at-limit' : len >= 1800 ? ' near-limit' : '');
+        }
+      });
+    }
+
     this.translateBtn.addEventListener('click', () => this.translate());
 
     // Check connection to background
@@ -42,7 +64,7 @@ class SidebarTranslator {
   async loadSettings() {
     try {
       const result = await chrome.storage.sync.get(['apiKeys', 'selectedModel']);
-      this.hasKeys = result.apiKeys && Object.values(result.apiKeys).some(key => key);
+      this.hasKeys = !!(result.apiKeys && Object.values(result.apiKeys).some(key => key && key.trim()));
 
       if (!this.hasKeys) {
         this.setStatus('Please configure API keys in options', 'info');
@@ -60,6 +82,10 @@ class SidebarTranslator {
       return;
     }
 
+    if (this.hasKeys === null) {
+      await this.loadSettings();
+    }
+
     if (!this.hasKeys) {
       this.setStatus('Please configure API keys in options', 'error');
       return;
@@ -74,7 +100,9 @@ class SidebarTranslator {
           { action: 'translateText', text },
           (response) => {
             if (chrome.runtime.lastError) {
-              reject(chrome.runtime.lastError);
+              reject(new Error(chrome.runtime.lastError.message));
+            } else if (!response) {
+              reject(new Error('No response from background service'));
             } else if (response.error) {
               reject(new Error(response.error));
             } else {
@@ -84,18 +112,8 @@ class SidebarTranslator {
         );
       });
 
-      if (response.translation) {
-        this.englishOutput.value = response.translation;
-        this.setStatus('Translation complete', 'success');
-
-        // Show tooltip with translation
-        chrome.runtime.sendMessage({
-          action: 'showTooltip',
-          text: response.translation
-        });
-      } else {
-        throw new Error(response.error || 'Translation failed');
-      }
+      this.englishOutput.value = response.translation;
+      this.setStatus('Translation complete', 'success');
     } catch (error) {
       this.setStatus('Error: ' + error.message, 'error');
       console.error('Translation error:', error);
@@ -109,7 +127,7 @@ class SidebarTranslator {
       this.statusElement.textContent = message;
       this.statusElement.className = `status ${type}`;
 
-      if (type !== 'error') {
+      if (type === 'success') {
         setTimeout(() => {
           this.statusElement.textContent = '';
           this.statusElement.className = 'status';
