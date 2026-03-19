@@ -96,3 +96,259 @@ button:hover {
   color: #d32f2f;
   border: 1px solid #ffcdd2;
 }
+
+/* ── Page header ─────────────────────────────────────────────────────────── */
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.page-header h1 {
+  margin: 0;
+}
+
+/* ── Hint text ───────────────────────────────────────────────────────────── */
+
+.hint {
+  font-size: 13px;
+  color: #888;
+  margin: -8px 0 16px 0;
+}
+
+/* ── Key rows ────────────────────────────────────────────────────────────── */
+
+.key-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.key-label {
+  min-width: 90px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #444;
+  flex-shrink: 0;
+}
+
+.key-input-group {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 6px;
+  min-width: 0;
+}
+
+.key-input-group input {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 13px;
+  min-width: 0;
+}
+
+/* ── Show / hide key button ──────────────────────────────────────────────── */
+
+.show-btn {
+  padding: 7px 10px;
+  background: #f0f0f0;
+  color: #555;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.show-btn:hover {
+  background: #e0e0e0;
+}
+
+/* ── Per-key test button ─────────────────────────────────────────────────── */
+
+.test-btn {
+  padding: 7px 14px;
+  background: #1976d2;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.test-btn:hover {
+  background: #1565c0;
+}
+
+.test-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+/* ── Per-key test status badge ───────────────────────────────────────────── */
+
+.test-status {
+  font-size: 12px;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.test-status.ok {
+  color: #388e3c;
+  font-weight: 500;
+}
+
+.test-status.fail {
+  color: #c62828;
+  font-weight: 500;
+}
+
+.test-status.testing {
+  color: #f57c00;
+  font-style: italic;
+}
+
+/* ── Test all button ─────────────────────────────────────────────────────── */
+
+.test-all-btn {
+  padding: 9px 18px;
+  background: #1976d2;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.test-all-btn:hover {
+  background: #1565c0;
+}
+
+.test-all-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+/* ── Save button row ─────────────────────────────────────────────────────── */
+
+.btn-row {
+  margin-top: 8px;
+}
+
+.save-btn {
+  padding: 12px 30px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.save-btn:hover {
+  background-color: #45a049;
+}
+
+/* ── Template section ────────────────────────────────────────────────────── */
+
+.template-list {
+  margin-bottom: 12px;
+}
+
+.template-item {
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+.template-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.template-item-header strong {
+  font-size: 13px;
+  color: #333;
+}
+
+.delete-template-btn {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+.delete-template-btn:hover { color: #d32f2f; }
+
+.template-item-content {
+  font-size: 12px;
+  color: #666;
+  white-space: pre-wrap;
+  max-height: 80px;
+  overflow-y: auto;
+}
+
+.template-add-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.template-name-input {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.template-textarea {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-family: inherit;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+.template-textarea:focus { outline: none; border-color: #4CAF50; }
+
+.small-action-btn {
+  padding: 8px 16px;
+  background: #1976d2;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.small-action-btn:hover { background: #1565c0; }
+
+/* ── Import / Export ──────────────────────────────────────────────────────── */
+
+.btn-row--compact {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}

@@ -1,55 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tooltip Translator Options</title>
+  <title>Siderbar Settings</title>
   <link rel="stylesheet" href="options.css">
 </head>
-
 <body>
   <div class="container">
-    <h1>Tooltip Translator Settings</h1>
+    <div class="page-header">
+      <h1>Siderbar Settings</h1>
+      <button id="testAllBtn" class="test-all-btn">Test All Keys</button>
+    </div>
+
+    <!-- ═══ API KEYS SECTION ═══ -->
     <div class="section">
       <h2>API Keys</h2>
-      <div class="field">
-        <label for="openaiKey">OpenAI API Key:</label>
-        <input type="password" id="openaiKey" placeholder="sk-...">
+      <p class="hint">Keys are pre-filled from defaults. Edit and save to use your own.</p>
+
+      <div class="key-row">
+        <span class="key-label">OpenAI</span>
+        <div class="key-input-group">
+          <input type="password" id="openaiKey" placeholder="sk-..." autocomplete="off">
+          <button class="show-btn" data-target="openaiKey" title="Show/hide key">👁</button>
+          <button class="test-btn" data-provider="openai" data-key-field="openaiKey">Test</button>
+        </div>
+        <span class="test-status" id="openaiStatus"></span>
       </div>
-      <div class="field">
-        <label for="openrouterKey">OpenRouter API Key:</label>
-        <input type="password" id="openrouterKey" placeholder="sk-or-...">
+
+      <div class="key-row">
+        <span class="key-label">OpenRouter</span>
+        <div class="key-input-group">
+          <input type="password" id="openrouterKey" placeholder="sk-or-..." autocomplete="off">
+          <button class="show-btn" data-target="openrouterKey" title="Show/hide key">👁</button>
+          <button class="test-btn" data-provider="openrouter" data-key-field="openrouterKey">Test</button>
+        </div>
+        <span class="test-status" id="openrouterStatus"></span>
       </div>
-      <div class="field">
-        <label for="groqKey">Groq API Key:</label>
-        <input type="password" id="groqKey" placeholder="gsk_...">
+
+      <div class="key-row">
+        <span class="key-label">Anthropic</span>
+        <div class="key-input-group">
+          <input type="password" id="anthropicKey" placeholder="sk-ant-..." autocomplete="off">
+          <button class="show-btn" data-target="anthropicKey" title="Show/hide key">👁</button>
+          <button class="test-btn" data-provider="anthropic" data-key-field="anthropicKey">Test</button>
+        </div>
+        <span class="test-status" id="anthropicStatus"></span>
+      </div>
+
+      <div class="key-row">
+        <span class="key-label">Groq</span>
+        <div class="key-input-group">
+          <input type="password" id="groqKey" placeholder="gsk_..." autocomplete="off">
+          <button class="show-btn" data-target="groqKey" title="Show/hide key">👁</button>
+          <button class="test-btn" data-provider="groq" data-key-field="groqKey">Test</button>
+        </div>
+        <span class="test-status" id="groqStatus"></span>
+      </div>
+
+      <div class="key-row">
+        <span class="key-label">DeepSeek</span>
+        <div class="key-input-group">
+          <input type="password" id="deepseekKey" placeholder="sk-..." autocomplete="off">
+          <button class="show-btn" data-target="deepseekKey" title="Show/hide key">👁</button>
+          <button class="test-btn" data-provider="deepseek" data-key-field="deepseekKey">Test</button>
+        </div>
+        <span class="test-status" id="deepseekStatus"></span>
+      </div>
+
+      <div class="key-row">
+        <span class="key-label">xAI / Grok</span>
+        <div class="key-input-group">
+          <input type="password" id="xaiKey" placeholder="xai-..." autocomplete="off">
+          <button class="show-btn" data-target="xaiKey" title="Show/hide key">👁</button>
+          <button class="test-btn" data-provider="xai" data-key-field="xaiKey">Test</button>
+        </div>
+        <span class="test-status" id="xaiStatus"></span>
       </div>
     </div>
+
+    <!-- ═══ MODEL SELECTION ═══ -->
     <div class="section">
       <h2>Model Selection</h2>
       <div class="field">
-        <label for="modelSelect">Select Model Provider:</label>
-        <select id="modelSelect">
-          <option value="openai">OpenAI (gpt-3.5-turbo)</option>
-          <option value="openrouter">OpenRouter (multiple models)</option>
-          <option value="groq">Groq (fast inference)</option>
+        <label for="providerSelect">Provider:</label>
+        <select id="providerSelect">
+          <option value="openai">OpenAI</option>
+          <option value="openrouter">OpenRouter</option>
+          <option value="anthropic">Anthropic</option>
+          <option value="groq">Groq</option>
+          <option value="deepseek">DeepSeek</option>
+          <option value="xai">xAI / Grok</option>
         </select>
       </div>
-      <div class="field" id="openrouterModelField" style="display: none;">
-        <label for="openrouterModelSelect">OpenRouter Model:</label>
-        <select id="openrouterModelSelect">
-          <option value="openai/gpt-3.5-turbo">GPT-3.5 Turbo</option>
-          <option value="openai/gpt-4">GPT-4</option>
-          <option value="anthropic/claude-2">Claude 2</option>
-          <option value="google/palm-2-chat-bison">PaLM 2</option>
-        </select>
+      <div class="field">
+        <label for="modelSelect">Model:</label>
+        <select id="modelSelect"></select>
       </div>
     </div>
-    <button id="saveBtn">Save Settings</button>
+
+    <!-- ═══ PROMPT TEMPLATES ═══ -->
+    <div class="section">
+      <h2>Prompt Templates</h2>
+      <p class="hint">Custom system prompts you can quickly pick in the sidebar chat.</p>
+      <div id="templateList" class="template-list"></div>
+      <div class="template-add-row">
+        <input type="text" id="newTemplateName" class="template-name-input" placeholder="Template name…">
+        <button id="addTemplateBtn" class="small-action-btn">+ Add</button>
+      </div>
+      <textarea id="newTemplateContent" class="template-textarea" rows="3" placeholder="System prompt content…"></textarea>
+    </div>
+
+    <!-- ═══ IMPORT / EXPORT ═══ -->
+    <div class="section">
+      <h2>Import / Export Settings</h2>
+      <p class="hint">Back up or restore all settings including API keys and templates.</p>
+      <div class="btn-row btn-row--compact">
+        <button id="exportBtn" class="small-action-btn">Export Settings</button>
+        <button id="importBtn" class="small-action-btn">Import Settings</button>
+        <input type="file" id="importFile" accept=".json" style="display:none">
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button id="saveBtn" class="save-btn">Save Settings</button>
+    </div>
     <div id="status"></div>
   </div>
   <script src="options.js"></script>
 </body>
-
 </html>

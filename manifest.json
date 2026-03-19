@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "Tooltip Translator",
-  "version": "1.0",
-  "description": "Translate Afrikaans to English using LLMs in a sidebar with tooltip functionality",
+  "name": "Siderbar",
+  "version": "2.1",
+  "description": "Multi-provider AI assistant — Translate, Chat, and Code in a sidebar panel",
   "action": {
-    "default_title": "Tooltip Translator",
+    "default_title": "Siderbar",
     "default_icon": {
       "16": "icons/icon16.png",
       "32": "icons/icon32.png",
@@ -25,7 +25,8 @@
     "storage",
     "scripting",
     "tabs",
-    "sidePanel"
+    "sidePanel",
+    "contextMenus"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -36,6 +37,20 @@
   },
   "background": {
     "service_worker": "worker.js"
+  },
+  "commands": {
+    "toggle-translate": {
+      "suggested_key": { "default": "Alt+T" },
+      "description": "Switch to Translate tab"
+    },
+    "toggle-chat": {
+      "suggested_key": { "default": "Alt+C" },
+      "description": "Switch to Chat tab"
+    },
+    "toggle-code": {
+      "suggested_key": { "default": "Alt+X" },
+      "description": "Switch to Code tab"
+    }
   },
   "content_scripts": [
     {

@@ -1,29 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tooltip Translator</title>
-    <link rel="stylesheet" href="sidebar.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Siderbar</title>
+  <link rel="stylesheet" href="sidebar.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Tooltip Translator</h1>
-            <a href="#" id="optionsLink" title="Open Settings">⚙️</a>
+  <div class="app">
+
+    <!-- Header -->
+    <header class="app-header">
+      <div class="app-title">
+        <span class="app-icon">🌍</span>
+        <span>Siderbar</span>
+      </div>
+      <div class="header-actions">
+        <button id="historyBtn" class="icon-btn" title="Translation History">📋</button>
+        <a href="#" id="optionsLink" class="icon-btn" title="Open Settings">⚙</a>
+      </div>
+    </header>
+
+    <!-- Tab bar -->
+    <nav class="tab-bar">
+      <button class="tab active" data-tab="translate">Translate</button>
+      <button class="tab" data-tab="chat">Chat</button>
+      <button class="tab" data-tab="code">Code</button>
+    </nav>
+
+    <!-- Shared model/params bar -->
+    <div class="model-bar">
+      <div class="select-group">
+        <label class="select-label" for="providerSelect">Provider</label>
+        <div class="custom-select-wrap">
+          <select id="providerSelect">
+            <option value="openai">OpenAI</option>
+            <option value="openrouter">OpenRouter</option>
+            <option value="anthropic">Anthropic</option>
+            <option value="groq">Groq</option>
+            <option value="deepseek">DeepSeek</option>
+            <option value="xai">xAI / Grok</option>
+          </select>
         </div>
-        <div class="input-section">
-            <label for="afrikaansInput">Afrikaans text:</label>
-            <textarea id="afrikaansInput" rows="5" placeholder="Type or paste Afrikaans text here..." maxlength="2000"></textarea>
-            <div class="char-count"><span id="charCount">0</span> / 2000</div>
-            <button id="translateBtn">Translate to English</button>
+      </div>
+      <div class="select-group select-group--model">
+        <label class="select-label" for="modelSelect">Model</label>
+        <div class="custom-select-wrap">
+          <select id="modelSelect"></select>
         </div>
-        <div class="output-section">
-            <label for="englishOutput">English Translation:</label>
-            <textarea id="englishOutput" rows="5" readonly placeholder="Translation will appear here..."></textarea>
-        </div>
-        <div class="status" id="status"></div>
+      </div>
     </div>
-    <script src="sidebar.js"></script>
+    <div class="params-bar">
+      <div class="param-group">
+        <label class="param-label" for="temperatureRange">
+          Temp <span class="param-value" id="temperatureValue">0.3</span>
+        </label>
+        <input type="range" id="temperatureRange" class="param-slider" min="0" max="2" step="0.1" value="0.3">
+      </div>
+      <div class="param-group">
+        <label class="param-label" for="maxTokensInput">Max Tokens</label>
+        <input type="number" id="maxTokensInput" class="param-input" min="1" max="128000" step="256" value="2048">
+      </div>
+    </div>
+
+    <!-- ═══════════════════ TRANSLATE TAB ═══════════════════ -->
+    <main class="tab-panel active" data-panel="translate">
+      <div class="field-block">
+        <div class="field-header">
+          <div class="lang-row">
+            <select id="sourceLang" class="lang-select">
+              <option value="Afrikaans" selected>Afrikaans</option>
+              <option value="English">English</option>
+              <option value="French">French</option>
+              <option value="German">German</option>
+              <option value="Spanish">Spanish</option>
+              <option value="Portuguese">Portuguese</option>
+              <option value="Italian">Italian</option>
+              <option value="Dutch">Dutch</option>
+              <option value="Russian">Russian</option>
+              <option value="Mandarin Chinese">Mandarin</option>
+              <option value="Japanese">Japanese</option>
+              <option value="Korean">Korean</option>
+              <option value="Arabic">Arabic</option>
+              <option value="Hindi">Hindi</option>
+              <option value="Turkish">Turkish</option>
+              <option value="Polish">Polish</option>
+              <option value="Swedish">Swedish</option>
+              <option value="Zulu">Zulu</option>
+              <option value="Xhosa">Xhosa</option>
+              <option value="Sotho">Sotho</option>
+              <option value="Tswana">Tswana</option>
+              <option value="Swahili">Swahili</option>
+            </select>
+            <button id="swapLangs" class="swap-btn" title="Swap languages">⇄</button>
+            <select id="targetLang" class="lang-select">
+              <option value="Afrikaans">Afrikaans</option>
+              <option value="English" selected>English</option>
+              <option value="French">French</option>
+              <option value="German">German</option>
+              <option value="Spanish">Spanish</option>
+              <option value="Portuguese">Portuguese</option>
+              <option value="Italian">Italian</option>
+              <option value="Dutch">Dutch</option>
+              <option value="Russian">Russian</option>
+              <option value="Mandarin Chinese">Mandarin</option>
+              <option value="Japanese">Japanese</option>
+              <option value="Korean">Korean</option>
+              <option value="Arabic">Arabic</option>
+              <option value="Hindi">Hindi</option>
+              <option value="Turkish">Turkish</option>
+              <option value="Polish">Polish</option>
+              <option value="Swedish">Swedish</option>
+              <option value="Zulu">Zulu</option>
+              <option value="Xhosa">Xhosa</option>
+              <option value="Sotho">Sotho</option>
+              <option value="Tswana">Tswana</option>
+              <option value="Swahili">Swahili</option>
+            </select>
+          </div>
+          <span class="char-count"><span id="charCount">0</span><span class="char-sep">/</span>5000</span>
+        </div>
+        <textarea id="translateInput" class="textarea" rows="5" maxlength="5000"
+                  placeholder="Type or paste text here…" spellcheck="false"></textarea>
+      </div>
+
+      <button id="translateBtn" class="action-btn action-btn--translate">
+        <span class="btn-icon">↓</span> Translate
+      </button>
+
+      <div class="field-block">
+        <div class="field-header">
+          <label class="field-label">Translation</label>
+          <button id="copyTranslateBtn" class="copy-btn" title="Copy">Copy</button>
+        </div>
+        <textarea id="translateOutput" class="textarea textarea--output" rows="5" readonly
+                  placeholder="Translation appears here…"></textarea>
+      </div>
+      <div id="translateStatus" class="status"></div>
+    </main>
+
+    <!-- ═══════════════════ CHAT TAB ═══════════════════ -->
+    <main class="tab-panel" data-panel="chat">
+      <div class="chat-system-prompt">
+        <button id="toggleSystemPrompt" class="toggle-system-btn">System prompt ▾</button>
+        <textarea id="systemPrompt" class="textarea textarea--system hidden" rows="3"
+                  placeholder="Optional: set a system prompt…"></textarea>
+      </div>
+      <div id="chatMessages" class="chat-messages">
+        <div class="chat-empty">Start a conversation…</div>
+      </div>
+      <div class="chat-input-bar">
+        <textarea id="chatInput" class="textarea chat-textarea" rows="2"
+                  placeholder="Type a message… (Ctrl+Enter to send)"></textarea>
+        <div class="chat-actions">
+          <button id="chatSendBtn" class="action-btn action-btn--send">Send</button>
+          <button id="chatClearBtn" class="clear-btn" title="Clear chat">🗑</button>
+        </div>
+      </div>
+      <div id="chatStatus" class="status"></div>
+    </main>
+
+    <!-- ═══════════════════ CODE TAB ═══════════════════ -->
+    <main class="tab-panel" data-panel="code">
+      <div class="code-actions-bar">
+        <select id="codeAction" class="code-action-select">
+          <option value="explain">Explain</option>
+          <option value="refactor">Refactor</option>
+          <option value="find-bugs">Find Bugs</option>
+          <option value="add-comments">Add Comments</option>
+          <option value="convert">Convert Language</option>
+          <option value="translate-comments">Translate Comments AF→EN</option>
+        </select>
+        <select id="codeTargetLang" class="code-lang-select hidden">
+          <option value="Python">Python</option>
+          <option value="JavaScript">JavaScript</option>
+          <option value="TypeScript">TypeScript</option>
+          <option value="Rust">Rust</option>
+          <option value="Go">Go</option>
+          <option value="Java">Java</option>
+          <option value="C#">C#</option>
+          <option value="C++">C++</option>
+          <option value="Ruby">Ruby</option>
+          <option value="PHP">PHP</option>
+          <option value="Swift">Swift</option>
+          <option value="Kotlin">Kotlin</option>
+        </select>
+      </div>
+      <div class="field-block">
+        <label class="field-label">Code Input</label>
+        <textarea id="codeInput" class="textarea textarea--code" rows="8"
+                  placeholder="Paste your code here…" spellcheck="false"></textarea>
+      </div>
+
+      <button id="codeRunBtn" class="action-btn action-btn--code">
+        <span class="btn-icon">▶</span> Run
+      </button>
+
+      <div class="field-block">
+        <div class="field-header">
+          <label class="field-label">Output</label>
+          <button id="copyCodeBtn" class="copy-btn" title="Copy">Copy</button>
+        </div>
+        <pre id="codeOutput" class="code-output"><code>Output appears here…</code></pre>
+      </div>
+      <div id="codeStatus" class="status"></div>
+    </main>
+
+    <!-- ═══════════════════ HISTORY PANEL ═══════════════════ -->
+    <div id="historyPanel" class="history-panel hidden">
+      <div class="history-header">
+        <h3>History</h3>
+        <div class="history-actions">
+          <button id="exportHistoryBtn" class="small-btn">Export</button>
+          <button id="closeHistoryBtn" class="icon-btn">✕</button>
+        </div>
+      </div>
+      <input id="historySearch" class="history-search" type="text" placeholder="Search history…">
+      <div class="history-tabs">
+        <button class="history-tab active" data-htab="all">All</button>
+        <button class="history-tab" data-htab="starred">★ Starred</button>
+      </div>
+      <div id="historyList" class="history-list"></div>
+    </div>
+
+  </div>
+  <script src="sidebar.js"></script>
 </body>
 </html>
